@@ -78,7 +78,7 @@ h2 {
 a {
   text-decoration: none;
 }
-.header {
+/* .header {
   border-bottom: 1px solid #f6f6f6;
   padding: 40px 0;
 }
@@ -110,7 +110,7 @@ a {
 }
 .header__logo p {
   color: #7b7b7b;
-}
+} */
 .button {
   display: inline-block;
   background-color: #fe5f1e;
@@ -246,7 +246,7 @@ a {
   font-weight: 600;
   font-size: 16px;
 }
-.categories ul {
+/* .categories ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -275,8 +275,8 @@ a {
 .categories ul li.active {
   background-color: #282828;
   color: #fff;
-}
-.sort {
+} */
+/* .sort {
   position: relative;
 }
 .sort__label {
@@ -324,8 +324,8 @@ a {
 .sort__popup ul li.active {
   font-weight: bold;
   color: #fe5f1e;
-}
-.pizza-block {
+} */
+/* .pizza-block {
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
@@ -403,7 +403,7 @@ a {
   font-size: 22px;
   line-height: 27px;
   letter-spacing: 0.015em;
-}
+} */
 body {
   background-color: #ffdf8c;
 }
