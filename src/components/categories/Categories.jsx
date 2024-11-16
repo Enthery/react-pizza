@@ -2,9 +2,9 @@ import "./styles.css";
 
 export default function Categories() {
   return (
-    <div class="categories">
+    <div className="categories">
       <ul>
-        <li class="active">Все</li>
+        <li className="active">Все</li>
         <li>Мясные</li>
         <li>Вегетарианская</li>
         <li>Гриль</li>
