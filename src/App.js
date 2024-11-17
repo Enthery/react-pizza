@@ -5,6 +5,8 @@ import Sort from "./components/sort/Sort";
 import Header from "./components/header/Header";
 import PizzaBlock from "./components/pizza-block/PizzaBlock";
 
+import db from "./assets/db/pizza.json";
+
 function App() {
   return (
     <div className="wrapper">
@@ -17,8 +19,9 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock name="Мексиканская" rub={500} />
-            <PizzaBlock name="Домашняя" rub={350} />
+            {db.map((items) => (
+              <PizzaBlock {...items} />
+            ))}
           </div>
         </div>
       </div>
