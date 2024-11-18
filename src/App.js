@@ -1,12 +1,11 @@
+import { useEffect, useState } from "react";
 import "./scss/app.scss";
 
 import Categories from "./components/categories/Categories";
 import Sort from "./components/sort/Sort";
 import Header from "./components/header/Header";
-import PizzaBlock from "./components/pizza-block/PizzaBlock";
-
-import db from "./assets/db/pizza.json";
-import { useEffect, useState } from "react";
+import PizzaBlock from "./components/PizzaBlock";
+import Skeleton from "./components/PizzaBlock/Skeleton";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -31,7 +30,7 @@ function App() {
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
             {items.map((obj) => (
-              <PizzaBlock key={obj.id} {...obj} />
+              <Skeleton key={obj.id} {...obj} />
             ))}
           </div>
         </div>
