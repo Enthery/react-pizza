@@ -16,10 +16,11 @@ export default function Home() {
         setItems(json);
         setLoadingPizza(false);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
