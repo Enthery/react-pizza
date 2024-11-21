@@ -11,11 +11,11 @@ const Skeleton = () => (
     backgroundColor="#ebebeb"
     foregroundColor="#ecebeb"
   >
-    <circle cx="132" cy="122" r="117" />
-    <rect x="0" y="265" rx="5" ry="5" width="280" height="26" />
-    <rect x="0" y="315" rx="10" ry="10" width="280" height="85" />
-    <rect x="0" y="420" rx="25" ry="25" width="90" height="45" />
-    <rect x="130" y="420" rx="25" ry="25" width="150" height="45" />
+    <circle cx="150" cy="122" r="117" />
+    <rect x="12" y="265" rx="5" ry="5" width="270" height="26" />
+    <rect x="12" y="315" rx="10" ry="10" width="270" height="85" />
+    <rect x="12" y="420" rx="25" ry="25" width="90" height="45" />
+    <rect x="132" y="420" rx="25" ry="25" width="140" height="45" />
   </ContentLoader>
 );
 
