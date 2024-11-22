@@ -16,12 +16,13 @@ export default function Home() {
 
   useEffect(() => {
     setLoadingPizza(true);
+
+    const sortBy = sortState.sortProperty.replace("-", "");
+    const order = sortState.sortProperty.includes("-") ? "asc" : "desc";
+    const category = categoryState > 0 ? `category=${categoryState}` : "";
+
     fetch(
-      `https://673b4458339a4ce4451b6ca1.mockapi.io/items?${
-        categoryState > 0 ? `category=${categoryState}` : ""
-      }&sortBy=${sortState.sortProperty.replace("-", "")}&order=${
-        sortState.sortProperty.includes("-") ? "asc" : "desc"
-      }`
+      `https://673b4458339a4ce4451b6ca1.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
     )
       .then((res) => res.json())
       .then((arr) => {
