@@ -5,7 +5,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/categories/Categories";
 import Sort from "../components/sort/Sort";
 
-export default function Home() {
+export default function Home({ searchValue }) {
   const [items, setItems] = useState([]);
   const [loadingPizza, setLoadingPizza] = useState(true);
   const [categoryState, setCategoryState] = useState(0);
@@ -32,6 +32,18 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, [categoryState, sortState]);
 
+  const skeletons = [...new Array(6)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+  const pizzas = items
+    .filter((obj) => {
+      if (obj.title.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+      return false;
+    })
+    .map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+
   return (
     <div className="container">
       <div className="content__top">
@@ -45,11 +57,7 @@ export default function Home() {
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {loadingPizza
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
-      </div>
+      <div className="content__items">{loadingPizza ? skeletons : pizzas}</div>
     </div>
   );
 }

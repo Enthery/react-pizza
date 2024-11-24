@@ -17,7 +17,7 @@ function App() {
       <Header searchValue={searchValue} setSearchValue={setSearchValue} />
       <div className="content">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home searchValue={searchValue} />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
