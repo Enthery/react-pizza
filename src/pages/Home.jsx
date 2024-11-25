@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import PizzaBlock from "../components/PizzaBlock/index";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/categories/Categories";
 import Sort from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-export default function Home({ searchValue }) {
+export default function Home() {
   const [items, setItems] = useState([]);
   const [loadingPizza, setLoadingPizza] = useState(true);
   const [categoryState, setCategoryState] = useState(0);
@@ -15,6 +16,8 @@ export default function Home({ searchValue }) {
     name: "популярности",
     sortProperty: "rating",
   });
+
+  const { searchValue } = useContext(SearchContext);
 
   useEffect(() => {
     setLoadingPizza(true);
