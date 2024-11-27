@@ -6,16 +6,25 @@ import Categories from "../components/categories/Categories";
 import Sort from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
+  const dispatch = useDispatch(setCategoryId());
+  const categoryId = useSelector((state) => state.filterSlice.categoryId);
+
+  console.log("id category", categoryId);
+
   const [items, setItems] = useState([]);
   const [loadingPizza, setLoadingPizza] = useState(true);
-  const [categoryState, setCategoryState] = useState(0);
+  // const [categoryState, setCategoryState] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortState, setSortState] = useState({
     name: "популярности",
     sortProperty: "rating",
   });
+
+  console.log(dispatch);
 
   const { searchValue } = useContext(SearchContext);
 
@@ -24,7 +33,7 @@ export default function Home() {
 
     const sortBy = sortState.sortProperty.replace("-", "");
     const order = sortState.sortProperty.includes("-") ? "asc" : "desc";
-    const category = categoryState > 0 ? `category=${categoryState}` : "";
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
     fetch(
@@ -36,7 +45,7 @@ export default function Home() {
         setLoadingPizza(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryState, sortState, searchValue, currentPage]);
+  }, [categoryId, sortState, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
@@ -47,8 +56,8 @@ export default function Home() {
     <div className="container">
       <div className="content__top">
         <Categories
-          categoriesValue={categoryState}
-          onChangeCategory={(index) => setCategoryState(index)}
+          categoriesValue={categoryId}
+          onChangeCategory={(index) => dispatch(setCategoryId(index))}
         />
         <Sort
           sortValue={sortState}
