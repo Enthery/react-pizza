@@ -1,18 +1,25 @@
 import { useState } from "react";
 import "./styles.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../../redux/slices/filterSlice";
 
-export default function Sort({ sortValue, onChangeSort }) {
+const list = [
+  { name: "популярности (DESC)", sortProperty: "rating" },
+  { name: "популярности (ASC)", sortProperty: "-rating" },
+  { name: "цене (DESC)", sortProperty: "price" },
+  { name: "цене (ASC)", sortProperty: "-price" },
+  { name: "алфавиту (DESC)", sortProperty: "title" },
+  { name: "алфавиту (ASC)", sortProperty: "-title" },
+];
+
+export default function Sort() {
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filterSlice.sort);
+
   const [open, setOpen] = useState(false);
-  const list = [
-    { name: "популярности (DESC)", sortProperty: "rating" },
-    { name: "популярности (ASC)", sortProperty: "-rating" },
-    { name: "цене (DESC)", sortProperty: "price" },
-    { name: "цене (ASC)", sortProperty: "-price" },
-    { name: "алфавиту (DESC)", sortProperty: "title" },
-    { name: "алфавиту (ASC)", sortProperty: "-title" },
-  ];
-  function clickSort(index) {
-    onChangeSort(index);
+
+  function clickSort(obj) {
+    dispatch(setSort(obj));
     setOpen((visible) => !visible);
   }
 
@@ -32,7 +39,7 @@ export default function Sort({ sortValue, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortValue.name}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       <div className="sort__popup">
         {open ? (
@@ -41,7 +48,7 @@ export default function Sort({ sortValue, onChangeSort }) {
               <li
                 key={index}
                 className={
-                  sortValue.sortProperty === obj.sortProperty ? "active" : ""
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
                 }
                 onClick={() => clickSort(obj)}
               >

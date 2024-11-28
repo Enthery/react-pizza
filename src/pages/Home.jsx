@@ -11,18 +11,14 @@ import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
   const dispatch = useDispatch(setCategoryId());
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
+  const { categoryId, sort } = useSelector((state) => state.filterSlice);
+  const sortType = sort.sortProperty;
 
   console.log("id category", categoryId);
 
   const [items, setItems] = useState([]);
   const [loadingPizza, setLoadingPizza] = useState(true);
-  // const [categoryState, setCategoryState] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortState, setSortState] = useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
 
   console.log(dispatch);
 
@@ -31,8 +27,8 @@ export default function Home() {
   useEffect(() => {
     setLoadingPizza(true);
 
-    const sortBy = sortState.sortProperty.replace("-", "");
-    const order = sortState.sortProperty.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.replace("-", "");
+    const order = sortType.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
@@ -45,7 +41,7 @@ export default function Home() {
         setLoadingPizza(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortState, searchValue, currentPage]);
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
@@ -59,10 +55,7 @@ export default function Home() {
           categoriesValue={categoryId}
           onChangeCategory={(index) => dispatch(setCategoryId(index))}
         />
-        <Sort
-          sortValue={sortState}
-          onChangeSort={(index) => setSortState(index)}
-        />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{loadingPizza ? skeletons : pizzas}</div>
