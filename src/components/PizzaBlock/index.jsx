@@ -28,7 +28,7 @@ export default function PizzaBlock({
       price,
       imageUrl,
       types: doughType,
-      sizes: activeSize,
+      sizes: sizes[activeSize],
     };
     dispatch(addItem(item));
   }
