@@ -20,7 +20,6 @@ export default function PizzaBlock({
   const dispatch = useDispatch();
 
   const addedCount = cartItem ? cartItem.count : 0;
-  console.log("click", addedCount);
 
   function onClickAdd() {
     const item = {

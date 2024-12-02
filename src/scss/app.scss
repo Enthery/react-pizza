@@ -167,6 +167,7 @@ grid-column-gap: 10px;
   }
 
   .content__items {
+    flex-direction: column;
     display: flex;
     flex-wrap: wrap;
   }
