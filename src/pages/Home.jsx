@@ -34,7 +34,7 @@ export default function Home() {
     dispatch(setCurrentPage(number));
   }
 
-  function fetchPizzas() {
+  async function fetchPizzas() {
     setLoadingPizza(true);
 
     const sortBy = sortType.replace("-", "");
@@ -42,14 +42,16 @@ export default function Home() {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    axios
-      .get(
+    try {
+      const response = await axios.get(
         `https://673b4458339a4ce4451b6ca1.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-      )
-      .then((res) => {
-        setItems(res.data);
-        setLoadingPizza(false);
-      });
+      );
+      setItems(response.data);
+      setLoadingPizza(false);
+    } catch (error) {
+      setLoadingPizza(false);
+      console.log("ERROR", error);
+    }
   }
 
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в редуксе
