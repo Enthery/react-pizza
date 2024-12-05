@@ -14,6 +14,7 @@ export const fetchPizzas = createAsyncThunk(
 
 const initialState = {
   items: [],
+  status: "loading",
 };
 
 const pizzasSlice = createSlice({
@@ -24,10 +25,23 @@ const pizzasSlice = createSlice({
       state.items = action.payload;
     },
   },
-  extraReducers: {
-    [fetchPizzas.fulfilled]: (state, action) => {
-      console.log(state);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPizzas.pending, (state) => {
+        state.status = "loading";
+        state.items = [];
+        console.log("Идет отправка");
+      })
+      .addCase(fetchPizzas.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.status = "success";
+        console.log("ВСё ОКЕЙ");
+      })
+      .addCase(fetchPizzas.rejected, (state) => {
+        state.status = "error";
+        state.items = [];
+        console.log("Ошибка");
+      });
   },
 });
 

@@ -14,6 +14,7 @@ import {
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import NotFound from "./NotFound";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,10 +24,8 @@ export default function Home() {
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filterSlice
   );
-  const { items } = useSelector((state) => state.pizzas);
+  const { items, status } = useSelector((state) => state.pizzas);
   const sortType = sort.sortProperty;
-
-  const [loadingPizza, setLoadingPizza] = useState(true);
 
   const { searchValue } = useContext(SearchContext);
 
@@ -35,28 +34,21 @@ export default function Home() {
   }
 
   async function getPizzas() {
-    setLoadingPizza(true);
-
     const sortBy = sortType.replace("-", "");
     const order = sortType.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    try {
-      dispatch(
-        fetchPizzas({
-          sortBy,
-          order,
-          category,
-          search,
-          currentPage,
-        })
-      );
-      setLoadingPizza(false);
-    } catch (error) {
-      setLoadingPizza(false);
-      console.log("ERROR", error);
-    }
+    dispatch(
+      fetchPizzas({
+        sortBy,
+        order,
+        category,
+        search,
+        currentPage,
+      })
+    );
+    window.scrollTo(0, 0);
   }
 
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в редуксе
@@ -114,7 +106,16 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{loadingPizza ? skeletons : pizzas}</div>
+      {status === "error" ? (
+        <div>
+          <NotFound />
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === "loading" ? skeletons : pizzas}
+        </div>
+      )}
+
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
