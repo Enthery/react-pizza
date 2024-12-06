@@ -7,13 +7,14 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
 import NotFound from "./NotFound";
 
 export default function Home() {
@@ -21,10 +22,8 @@ export default function Home() {
   const dispatch = useDispatch(setCategoryId());
   const isSearch = useRef(false);
   const isMount = useRef(false);
-  const { categoryId, sort, currentPage } = useSelector(
-    (state) => state.filterSlice
-  );
-  const { items, status } = useSelector((state) => state.pizzas);
+  const { categoryId, sort, currentPage } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizzas);
   const sortType = sort.sortProperty;
 
   const { searchValue } = useContext(SearchContext);
