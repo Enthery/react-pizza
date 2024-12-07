@@ -1,22 +1,23 @@
-import { SearchContext } from "../../App";
 import debounce from "lodash.debounce";
 import styles from "./Search.module.scss";
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filterSlice";
 
 export default function Search() {
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
-  const { searchValue, setSearchValue } = useContext(SearchContext);
   const inputRef = useRef();
 
   function onClickClear() {
-    setSearchValue("");
+    dispatch(setSearchValue(""));
     setValue("");
     inputRef.current.focus();
   }
 
   const updateSearchValue = useCallback(
     debounce((str) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 250),
     []
   );
@@ -52,7 +53,7 @@ export default function Search() {
         placeholder="Поиск пиццы..."
         onChange={onChangeInput}
       />
-      {searchValue && (
+      {value && (
         <svg
           onClick={() => {
             onClickClear();

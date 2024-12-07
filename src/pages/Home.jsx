@@ -22,11 +22,10 @@ export default function Home() {
   const dispatch = useDispatch(setCategoryId());
   const isSearch = useRef(false);
   const isMount = useRef(false);
-  const { categoryId, sort, currentPage } = useSelector(selectFilter);
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzas);
   const sortType = sort.sortProperty;
-
-  const { searchValue } = useContext(SearchContext);
 
   function onChangePage(number) {
     dispatch(setCurrentPage(number));
