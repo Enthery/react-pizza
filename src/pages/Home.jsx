@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import PizzaBlock from "../components/PizzaBlock/index";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/categories/Categories";
@@ -13,7 +13,7 @@ import {
   setFilters,
 } from "../redux/slices/filterSlice";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
 import NotFound from "./NotFound";
 
@@ -92,7 +92,11 @@ export default function Home() {
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj) => (
+    <Link to={`/pizza/${obj.id}`} key={obj.id}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
 
   return (
     <div className="container">

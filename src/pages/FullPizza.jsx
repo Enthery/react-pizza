@@ -14,18 +14,21 @@ export default function FullPizza() {
         );
         setPizza(data);
       } catch (error) {
-        console.log(error);
+        alert("Error");
       }
     }
     fetchPizza();
   }, []);
 
+  if (!pizza) {
+    return "Loading...";
+  }
+
   return (
     <div className="container">
-      <img src="" />
-      <h2>{id}</h2>
-      <p>gsdgsdg gwegwe gsdg</p>
-      <h4>250p</h4>
+      <img src={pizza.imageUrl} />
+      <h2>{pizza.title}</h2>
+      <h4>{pizza.price}</h4>
     </div>
   );
 }
