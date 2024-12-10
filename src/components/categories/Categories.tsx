@@ -2,7 +2,7 @@ import "./styles.css";
 
 type CategoriesProps = {
   categoriesValue: number;
-  onChangeCategory: any
+  onChangeCategory: (index:number) => void;
 }
 
 export default function Categories({ categoriesValue, onChangeCategory } : CategoriesProps) {

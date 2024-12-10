@@ -28,10 +28,11 @@ export default function Sort() {
     dispatch(setSort(obj));
     setOpen((visible) => !visible);
   }
+  
 
   useEffect(() => {
-    function handleSlickOutside(event:any) {
-      if (!event.composedPath().includes(sortRef.current)) {
+    function handleSlickOutside(event: MouseEvent) {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     }
