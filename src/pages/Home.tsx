@@ -19,7 +19,7 @@ import NotFound from "./NotFound";
 
 export default function Home() {
   const navigate = useNavigate();
-  const dispatch = useDispatch(setCategoryId());
+  const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMount = useRef(false);
   const { categoryId, sort, currentPage, searchValue } =
@@ -27,7 +27,7 @@ export default function Home() {
   const { items, status } = useSelector(selectPizzas);
   const sortType = sort.sortProperty;
 
-  function onChangePage(number) {
+  function onChangePage(number:number) {
     dispatch(setCurrentPage(number));
   }
 
@@ -38,6 +38,7 @@ export default function Home() {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -54,7 +55,7 @@ export default function Home() {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
 
-      const sort = list.find((obj) => (obj.sortProperty = params.sortProperty));
+      const sort = list.find((obj:any) => (obj.sortProperty = params.sortProperty));
 
       dispatch(
         setFilters({
@@ -92,7 +93,7 @@ export default function Home() {
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const pizzas = items.map((obj) => (
+  const pizzas = items.map((obj:any) => (
     <Link to={`/pizza/${obj.id}`} key={obj.id}>
       <PizzaBlock {...obj} />
     </Link>
@@ -103,7 +104,7 @@ export default function Home() {
       <div className="content__top">
         <Categories
           categoriesValue={categoryId}
-          onChangeCategory={(index) => dispatch(setCategoryId(index))}
+          onChangeCategory={(index:number) => dispatch(setCategoryId(index))}
         />
         <Sort />
       </div>

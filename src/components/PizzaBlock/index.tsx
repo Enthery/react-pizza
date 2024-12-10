@@ -3,6 +3,15 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+}
+
 export default function PizzaBlock({
   id,
   title,
@@ -10,7 +19,7 @@ export default function PizzaBlock({
   imageUrl,
   sizes,
   types,
-}) {
+}: PizzaBlockProps) {
   // const [countButton, setCount] = useState(0);
   const cartItem = useSelector(selectCartItemById(id));
   const [activeSize, setActiveSize] = useState(0);
