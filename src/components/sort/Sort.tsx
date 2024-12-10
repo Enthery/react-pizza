@@ -3,7 +3,12 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../../redux/slices/filterSlice";
 
-export const list = [
+type ListItem = {
+  name: string;
+  sortProperty: string;
+}
+
+export const list: ListItem[] = [
   { name: "популярности (DESC)", sortProperty: "rating" },
   { name: "популярности (ASC)", sortProperty: "-rating" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -19,7 +24,7 @@ export default function Sort() {
 
   const [open, setOpen] = useState(false);
 
-  function clickSort(obj) {
+  function clickSort(obj:ListItem) {
     dispatch(setSort(obj));
     setOpen((visible) => !visible);
   }
