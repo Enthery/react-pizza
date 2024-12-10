@@ -20,7 +20,7 @@ export const list: ListItem[] = [
 export default function Sort() {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Sort() {
   }
 
   useEffect(() => {
-    function handleSlickOutside(event) {
+    function handleSlickOutside(event:any) {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }

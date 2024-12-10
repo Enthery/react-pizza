@@ -1,6 +1,11 @@
 import "./styles.css";
 
-export default function Categories({ categoriesValue, onChangeCategory }) {
+type CategoriesProps = {
+  categoriesValue: number;
+  onChangeCategory: any
+}
+
+export default function Categories({ categoriesValue, onChangeCategory } : CategoriesProps) {
   const categories = [
     "Все",
     "Мясные",
