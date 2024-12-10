@@ -4,7 +4,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/categories/Categories";
 import Sort, { list } from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectFilter,
