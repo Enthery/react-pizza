@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { CartItem } from "./cartSlice";
 
-export const fetchPizzas = createAsyncThunk(
+export const fetchPizzas = createAsyncThunk<Pizza[], Record<string, string>>(
   "pizzas/fetchPizzasStatus",
   async (params) => {
     const { sortBy, search, order, category, currentPage } = params;
@@ -12,6 +13,12 @@ export const fetchPizzas = createAsyncThunk(
     return data;
   }
 );
+
+export enum Status {
+  LOADING = "loading",
+  SUCCESS = "success",
+  ERROR = "error",
+}
 
 type Pizza = {
   id: string;
@@ -24,34 +31,34 @@ type Pizza = {
 
 interface PizzaSliceState {
   items: Pizza[];
-  status: "loading" | "success" | "error";
+  status: Status;
 }
 
 const initialState: PizzaSliceState = {
   items: [],
-  status: "loading",
+  status: Status.LOADING,
 };
 
 const pizzasSlice = createSlice({
   name: "pizza",
   initialState,
   reducers: {
-    setItems(state, action) {
+    setItems(state, action: PayloadAction<Pizza[]>) {
       state.items = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPizzas.pending, (state) => {
-        state.status = "loading";
+        state.status = Status.LOADING;
         state.items = [];
       })
       .addCase(fetchPizzas.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.status = "success";
+        state.status = Status.SUCCESS;
       })
       .addCase(fetchPizzas.rejected, (state) => {
-        state.status = "error";
+        state.status = Status.ERROR;
         state.items = [];
       });
   },

@@ -5,7 +5,7 @@ import Categories from "../components/categories/Categories";
 import Sort, { list } from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
 
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import {
   selectFilter,
   setCategoryId,
@@ -16,10 +16,11 @@ import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
 import NotFound from "./NotFound";
+import { useAppDispatch } from "../redux/store";
 
 export default function Home() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMount = useRef(false);
   const { categoryId, sort, currentPage, searchValue } =
@@ -27,8 +28,8 @@ export default function Home() {
   const { items, status } = useSelector(selectPizzas);
   const sortType = sort.sortProperty;
 
-  function onChangePage(number:number) {
-    dispatch(setCurrentPage(number));
+  function onChangePage(page:number) {
+    dispatch(setCurrentPage(page));
   }
 
   async function getPizzas() {
@@ -38,13 +39,12 @@ export default function Home() {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
         category,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       })
     );
     window.scrollTo(0, 0);
@@ -79,16 +79,29 @@ export default function Home() {
 
   // Если изменили параметры и был первый рендер
   useEffect(() => {
-    if (isMount.current) {
-      const queryStr = qs.stringify({
-        sortProperty: sortType,
-        categoryId,
+    if(isMount.current) {
+      const params = {
+        categoryId: categoryId > 0 ? categoryId : null,
+        sortProperty: sort.sortProperty,
         currentPage,
-      });
-      navigate(`?${queryStr}`);
+      }
+      const queryString = qs.stringify(params, {skipNulls: true})
+      navigate(`/?${queryString}`)
     }
-    isMount.current = true;
-  }, [categoryId, sortType, currentPage]);
+    if(!window.location.search) {
+    dispatch(fetchPizzas())
+    }
+  },[categoryId, sort.sortProperty, searchValue, currentPage])
+  //   if (isMount.current) {
+  //     const queryStr = qs.stringify({
+  //       sortProperty: sortType,
+  //       categoryId,
+  //       currentPage,
+  //     });
+  //     navigate(`?${queryStr}`);
+  //   }
+  //   isMount.current = true;
+  // }, [categoryId, sortType, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
