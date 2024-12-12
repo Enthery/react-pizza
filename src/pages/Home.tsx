@@ -52,22 +52,22 @@ export default function Home() {
   }
 
   // Парсим параметры при первом рендере.
-  useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzasParams;
+  // useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzasParams;
 
-      const sort = list.find((obj) => (obj.sortProperty == params.sortBy));
+  //     const sort = list.find((obj) => (obj.sortProperty == params.sortBy));
       
-      dispatch(setFilters({
-        searchValue: params.search,
-        categoryId: Number(params.category),
-        currentPage: Number(params.currentPage),
-        sort: sort || list[0],
-      })
-      );
-      isSearch.current = true;
-    }
-  }, []);
+  //     dispatch(setFilters({
+  //       searchValue: params.search,
+  //       categoryId: Number(params.category),
+  //       currentPage: Number(params.currentPage),
+  //       sort: sort || list[0],
+  //     })
+  //     );
+  //     isSearch.current = true;
+  //   }
+  // }, []);
 
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
@@ -80,20 +80,23 @@ export default function Home() {
   }, [categoryId, sortType, searchValue, currentPage]);
 
   // Если изменили параметры и был первый рендер
-  useEffect(() => {
-    if(isMount.current) {
-      const params = {
-        categoryId: categoryId > 0 ? categoryId : null,
-        sortProperty: sort.sortProperty,
-        currentPage,
-      }
-      const queryString = qs.stringify(params, {skipNulls: true})
-      navigate(`/?${queryString}`)
-    }
-    if(!window.location.search) {
-    dispatch(fetchPizzas({} as SearchPizzasParams))
-    }
-  },[categoryId, sort.sortProperty, searchValue, currentPage])
+  // useEffect(() => {
+  //   if(isMount.current) {
+  //     const params = {
+  //       categoryId: categoryId > 0 ? categoryId : null,
+  //       sortProperty: sort.sortProperty,
+  //       currentPage,
+  //     }
+  //     const queryString = qs.stringify(params, {skipNulls: true})
+  //     navigate(`/?${queryString}`)
+  //   }
+  //   if(!window.location.search) {
+  //   dispatch(fetchPizzas({} as SearchPizzasParams))
+  //   }
+  // },[categoryId, sort.sortProperty, searchValue, currentPage])
+
+
+
   //   if (isMount.current) {
   //     const queryStr = qs.stringify({
   //       sortProperty: sortType,
@@ -109,9 +112,9 @@ export default function Home() {
     <Skeleton key={index} />
   ));
   const pizzas = items.map((obj:any) => (
-    <Link to={`/pizza/${obj.id}`} key={obj.id}>
+   
       <PizzaBlock {...obj} />
-    </Link>
+   
   ));
 
   return (
@@ -119,7 +122,7 @@ export default function Home() {
       <div className="content__top">
         <Categories
           categoriesValue={categoryId}
-          onChangeCategory={(index:number) => dispatch(setCategoryId(index))}
+          onChangeCategory={(index) => dispatch(setCategoryId(index))}
         />
         <Sort />
       </div>

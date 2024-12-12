@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, CartItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { addItem, CartItemTypes, selectCartItemById } from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 type PizzaBlockProps = {
   id: string;
@@ -31,7 +32,7 @@ export default function PizzaBlock({
   const addedCount = cartItem ? cartItem.count : 0;
 
   function onClickAdd() {
-    const item: CartItem = {
+    const item: CartItemTypes = {
       id,
       title,
       price,
@@ -46,17 +47,19 @@ export default function PizzaBlock({
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
+      <Link to={`/pizza/${id}`} key={id}>
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((item, index:any) => (
+            {types.map((item) => (
               <li
                 key={item}
-                className={types === index ? "active" : ""}
-                onClick={() => setActiveType(index)}
+                className={activeType === item ? "active" : ""}
+                onClick={() => setActiveType(item)}
               >
-                {item === 0 ? "тонкое" : "традиционное"}
+                {typeNames[item]}
               </li>
             ))}
           </ul>
