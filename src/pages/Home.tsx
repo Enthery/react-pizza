@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 
 import {  useSelector } from "react-redux";
 import {
+  FilterSliceState,
   selectFilter,
   setCategoryId,
   setCurrentPage,
@@ -14,7 +15,7 @@ import {
 } from "../redux/slices/filterSlice";
 import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, SearchPizzasParams, selectPizzas } from "../redux/slices/pizzasSlice";
 import NotFound from "./NotFound";
 import { useAppDispatch } from "../redux/store";
 
@@ -50,18 +51,19 @@ export default function Home() {
     window.scrollTo(0, 0);
   }
 
-  // Если был первый рендер, то проверяем URL-параметры и сохраняем в редуксе
+  // Парсим параметры при первом рендере.
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzasParams;
 
-      const sort = list.find((obj:any) => (obj.sortProperty = params.sortProperty));
-
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        })
+      const sort = list.find((obj) => (obj.sortProperty == params.sortBy));
+      
+      dispatch(setFilters({
+        searchValue: params.search,
+        categoryId: Number(params.category),
+        currentPage: Number(params.currentPage),
+        sort: sort || list[0],
+      })
       );
       isSearch.current = true;
     }
@@ -89,7 +91,7 @@ export default function Home() {
       navigate(`/?${queryString}`)
     }
     if(!window.location.search) {
-    dispatch(fetchPizzas())
+    dispatch(fetchPizzas({} as SearchPizzasParams))
     }
   },[categoryId, sort.sortProperty, searchValue, currentPage])
   //   if (isMount.current) {
