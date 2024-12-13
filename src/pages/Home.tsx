@@ -112,9 +112,9 @@ export default function Home() {
     <Skeleton key={index} />
   ));
   const pizzas = items.map((obj:any) => (
-   
+    
       <PizzaBlock {...obj} />
-   
+    
   ));
 
   return (
