@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PizzaBlock from "../components/PizzaBlock/index";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Categories from "../components/categories/Categories";
@@ -32,6 +32,10 @@ export default function Home() {
   function onChangePage(page:number) {
     dispatch(setCurrentPage(page));
   }
+
+  const onChangeCategory = useCallback((index:number) => {
+    dispatch(setCategoryId(index))
+  }, [])
 
   async function getPizzas() {
     const sortBy = sortType.replace("-", "");
@@ -113,16 +117,16 @@ export default function Home() {
   ));
   const pizzas = items.map((obj:any) => (
     
-      <PizzaBlock {...obj} />
+      <PizzaBlock key={obj.id} {...obj} />
     
   ));
-
+console.log(categoryId);
   return (
     <div className="container">
       <div className="content__top">
         <Categories
           categoriesValue={categoryId}
-          onChangeCategory={(index) => dispatch(setCategoryId(index))}
+          onChangeCategory={onChangeCategory}
         />
         <Sort />
       </div>

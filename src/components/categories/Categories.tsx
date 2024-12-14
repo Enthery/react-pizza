@@ -1,3 +1,4 @@
+import { useWhyDidYouUpdate } from "ahooks";
 import "./styles.css";
 
 type CategoriesProps = {
@@ -14,6 +15,7 @@ export default function Categories({ categoriesValue, onChangeCategory } : Categ
     "Острые",
     "Закрытые",
   ];
+  useWhyDidYouUpdate('Categories', {categoriesValue, onChangeCategory})
 
   return (
     <div className="categories">
