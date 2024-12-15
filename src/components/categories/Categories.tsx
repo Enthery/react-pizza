@@ -1,21 +1,22 @@
-import { useWhyDidYouUpdate } from "ahooks";
 import "./styles.css";
+import React from "react";
 
 type CategoriesProps = {
   categoriesValue: number;
   onChangeCategory: (index:number) => void;
 }
+const categories = [
+  "Все",
+  "Мясные",
+  "Вегетарианская",
+  "Гриль",
+  "Острые",
+  "Закрытые",
+];
 
-export default function Categories({ categoriesValue, onChangeCategory } : CategoriesProps) {
-  const categories = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
-  ];
-  useWhyDidYouUpdate('Categories', {categoriesValue, onChangeCategory})
+
+export default React.memo(function Categories({ categoriesValue, onChangeCategory } : CategoriesProps) {
+  
 
   return (
     <div className="categories">
@@ -32,4 +33,4 @@ export default function Categories({ categoriesValue, onChangeCategory } : Categ
       </ul>
     </div>
   );
-}
+})

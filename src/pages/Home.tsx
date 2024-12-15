@@ -120,7 +120,7 @@ export default function Home() {
       <PizzaBlock key={obj.id} {...obj} />
     
   ));
-console.log(categoryId);
+
   return (
     <div className="container">
       <div className="content__top">
@@ -128,7 +128,7 @@ console.log(categoryId);
           categoriesValue={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <Sort />
+        <Sort value={sort}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
