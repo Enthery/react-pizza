@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import getCartFromLocalStorage from "../../utils/getCartFromLocalStorage";
 
 export type CartItemTypes = {
   id: string;
@@ -18,11 +19,11 @@ interface CartSliceState {
 
 const initialState: CartSliceState = {
   totalPrice: 0,
-  items: [],
+  items: getCartFromLocalStorage(),
 };
 
 const cartSlice = createSlice({
-  name: "cartFilters",
+  name: "cart",
   initialState,
   reducers: {
     addItem(state, action: PayloadAction<CartItemTypes>) {
