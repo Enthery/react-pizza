@@ -6,18 +6,14 @@ import Sort, { list } from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
 
 import {  useSelector } from "react-redux";
-import {
-  FilterSliceState,
-  selectFilter,
-  setCategoryId,
-  setCurrentPage,
-  setFilters,
-} from "../redux/slices/filterSlice";
-import qs from "qs";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchPizzas, SearchPizzasParams, selectPizzas } from "../redux/slices/pizzasSlice";
+
 import NotFound from "./NotFound";
 import { useAppDispatch } from "../redux/store";
+import { selectFilter } from "../redux/filter/selectors";
+import { setCategoryId, setCurrentPage } from "../redux/filter/slice";
+import { selectPizzas } from "../redux/pizza/selectors";
+import { fetchPizzas } from "../redux/pizza/asyncActions";
 
 export default function Home() {
   const navigate = useNavigate();
