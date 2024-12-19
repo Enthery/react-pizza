@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useRef } from "react";
-import PizzaBlock from "../components/PizzaBlock/index";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import Categories from "../components/categories/Categories";
-import Sort, { list } from "../components/sort/Sort";
-import Pagination from "../components/Pagination";
+import {
+  PizzaBlock,
+  Skeleton,
+  Categories,
+  Sort,
+  Pagination,
+  NotFoundBlock,
+} from "../components/index";
 
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import NotFound from "./NotFound";
 import { useAppDispatch } from "../redux/store";
 import { selectFilter } from "../redux/filter/selectors";
 import { setCategoryId, setCurrentPage } from "../redux/filter/slice";
@@ -123,7 +125,7 @@ export default function Home() {
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
         <div>
-          <NotFound />
+          <NotFoundBlock />
         </div>
       ) : (
         <div className="content__items">

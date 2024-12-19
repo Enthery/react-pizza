@@ -1,0 +1,10 @@
+export { default as Skeleton } from "./PizzaBlock/Skeleton";
+export { default as PizzaBlock } from "./PizzaBlock/index";
+export { default as Header } from "./header/Header";
+export { default as Categories } from "./categories/Categories";
+export { default as CartItem } from "./CartItem/CartItem";
+export { default as CartEmpty } from "./CartEmpty/CartEmpty";
+export { default as Search } from "./Search/index";
+export { default as Pagination } from "./Pagination/index";
+export { default as NotFoundBlock } from "./NotFoundBlock/index";
+export { default as Sort } from "./sort/Sort";
