@@ -5,7 +5,7 @@ import Categories from "../components/categories/Categories";
 import Sort, { list } from "../components/sort/Sort";
 import Pagination from "../components/Pagination";
 
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import NotFound from "./NotFound";
@@ -25,13 +25,13 @@ export default function Home() {
   const { items, status } = useSelector(selectPizzas);
   const sortType = sort.sortProperty;
 
-  function onChangePage(page:number) {
+  function onChangePage(page: number) {
     dispatch(setCurrentPage(page));
   }
 
-  const onChangeCategory = useCallback((index:number) => {
-    dispatch(setCategoryId(index))
-  }, [])
+  const onChangeCategory = useCallback((index: number) => {
+    dispatch(setCategoryId(index));
+  }, []);
 
   async function getPizzas() {
     const sortBy = sortType.replace("-", "");
@@ -57,7 +57,7 @@ export default function Home() {
   //     const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzasParams;
 
   //     const sort = list.find((obj) => (obj.sortProperty == params.sortBy));
-      
+
   //     dispatch(setFilters({
   //       searchValue: params.search,
   //       categoryId: Number(params.category),
@@ -95,8 +95,6 @@ export default function Home() {
   //   }
   // },[categoryId, sort.sortProperty, searchValue, currentPage])
 
-
-
   //   if (isMount.current) {
   //     const queryStr = qs.stringify({
   //       sortProperty: sortType,
@@ -111,11 +109,7 @@ export default function Home() {
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const pizzas = items.map((obj:any) => (
-    
-      <PizzaBlock key={obj.id} {...obj} />
-    
-  ));
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   return (
     <div className="container">
@@ -124,7 +118,7 @@ export default function Home() {
           categoriesValue={categoryId}
           onChangeCategory={onChangeCategory}
         />
-        <Sort value={sort}/>
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
